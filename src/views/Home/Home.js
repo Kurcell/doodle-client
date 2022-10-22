@@ -1,11 +1,16 @@
 import React from 'react'
-import NavBar from "../../components/NavBar";
+import NavBar from '../../components/NavBar';
+import themeOptions from '../../components/Theme';
+import { ThemeProvider } from '@mui/material/styles';
+
 
 const Home = () => {
     return (
-        <div>
-            <NavBar/>
-        </div>
+        <ThemeProvider theme={themeOptions}>
+            <div>
+                <NavBar />
+            </div>
+        </ThemeProvider>
     )
 }
 
