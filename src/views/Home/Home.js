@@ -1,8 +1,11 @@
 import React from 'react'
+import Canvas from "../../components/Canvas"
 
 const Home = () => {
     return (
-        <>Welcome to Home!</>
+        <div>
+            <Canvas />
+        </div>
     )
 }
 
