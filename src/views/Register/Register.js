@@ -69,7 +69,7 @@ const Register = () => {
                         sx={{ mt: 3, mb: 2 }}
                     >
                         Register
-                    </Button>>
+                    </Button>
                 </Box>
             </Box>
         </React.Fragment>
