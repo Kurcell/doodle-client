@@ -1,14 +1,14 @@
 import React from 'react'
 import {Typography} from "@mui/material";
 
-const Home = () => {
+const Profile = () => {
     return (
-        <div>
+        <React.Fragment>
             <Typography>
-                I am home
+                I am profile
             </Typography>
-        </div>
+        </React.Fragment>
     )
 }
 
-export default Home;
+export default Profile;
