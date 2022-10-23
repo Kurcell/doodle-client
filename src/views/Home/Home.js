@@ -1,12 +1,10 @@
 import React from 'react'
-import {Typography} from "@mui/material";
+import Canvas from "../../components/Canvas"
 
 const Home = () => {
     return (
         <div>
-            <Typography>
-                I am home
-            </Typography>
+            <Canvas />
         </div>
     )
 }
