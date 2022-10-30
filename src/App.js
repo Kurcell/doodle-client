@@ -6,18 +6,21 @@ import Error404 from "./views/Error404";
 import Profile from "./views/Profile";
 import Settings from "./views/Settings";
 import Home from "./views/Home";
+import Easel from "./views/Easel";
 import NavBar from "./components/NavBar";
 import themeOptions from "./components/Theme";
 import {ThemeProvider} from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
 
 function App() {
     return (
-      <div className="App">
           <ThemeProvider theme={themeOptions}>
+              <CssBaseline />
               <Router>
                   <NavBar/>
                   <Routes>
                       <Route path="/" element={<Home/>}/>
+                      <Route path="/easel" element={<Easel />}/>
                       <Route path="/login" element={<Login/>}/>
                       <Route path="/register" element={<Register/>}/>
                       <Route path="*" element={<Error404/>}/>
@@ -26,7 +29,6 @@ function App() {
                   </Routes>
               </Router>
           </ThemeProvider>
-      </div>
     );
 }
 
