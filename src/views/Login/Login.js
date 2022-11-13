@@ -1,9 +1,34 @@
-import React from 'react'
+import React from 'react';
+import { useNavigate } from "react-router-dom"
 import { Box, Button, TextField, Typography } from "@mui/material";
 
-function Login() {
-    const handleSubmit = () => {
-        console.log("submitted");
+function Login(props) {
+
+    const navigate = useNavigate()
+
+    const login = (event) => {
+        event.preventDefault();
+        let body = JSON.stringify({
+            email: event.target.email.value,
+            password: event.target.password.value,
+            remember: false
+        })
+        console.log(body);
+        fetch('http://localhost:5000/login', 
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }, 
+            body,
+            credentials: 'include'
+        })
+            .then((response) => 
+                response.json())
+            .then((data) => {
+                console.log(data)
+                navigate('/')
+            });
     };
 
     return (
@@ -17,7 +42,7 @@ function Login() {
                 }}
             >
                 <Typography variant="h5">Log In</Typography>
-                <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                <Box component="form" onSubmit={login} noValidate sx={{ mt: 1 }}>
                     <TextField
                         margin="normal"
                         required
