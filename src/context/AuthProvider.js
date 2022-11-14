@@ -13,7 +13,6 @@ export const AuthProvider = ({ children }) => {
                 withCredentials: true
             })
             .then(res => {
-                console.log(res)
                 setSession({user: res.data.user, authenticated: res.data.auth, loading: false})
             })
             .catch(e => {
