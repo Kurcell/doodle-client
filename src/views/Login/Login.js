@@ -1,34 +1,30 @@
 import React from 'react';
-import { useNavigate } from "react-router-dom"
+import axios from 'axios';
 import { Box, Button, TextField, Typography } from "@mui/material";
 
 function Login(props) {
 
-    const navigate = useNavigate()
-
-    const login = (event) => {
+    const login = async (event) => {
         event.preventDefault();
+
         let body = JSON.stringify({
             email: event.target.email.value,
             password: event.target.password.value,
             remember: false
         })
-        console.log(body);
-        fetch('http://localhost:5000/login', 
-        {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            }, 
-            body,
-            credentials: 'include'
-        })
-            .then((response) => 
-                response.json())
-            .then((data) => {
-                console.log(data)
-                navigate('/')
-            });
+
+        try {
+            await axios.post(process.env.REACT_APP_API + '/login',
+                body,
+                {
+                    headers: { 'Content-Type': 'application/json' },
+                    withCredentials: true
+                }
+            );
+            window.location.reload(false);
+        } catch (e) {
+            console.log(e)
+        }
     };
 
     return (

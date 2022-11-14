@@ -1,9 +1,20 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import AuthContext from '../../context/AuthProvider';
+
 
 const Home = () => {
+    const { session } = useContext(AuthContext)
     return (
         <div>
-            This is my feed.
+            {session.loading ?
+                <>
+                    Loading feed...
+                </>
+                :
+                <>
+                    This is {session.authenticated ? session.user.screenname + "'s" : 'a'} feed.
+                </>
+            }
         </div>
     )
 }
