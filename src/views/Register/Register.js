@@ -1,9 +1,31 @@
 import React from 'react'
 import { Box, Button, Grid, TextField, Typography } from "@mui/material";
+import axios from 'axios';
 
 const Register = () => {
-    const handleSubmit = () => {
-        console.log("submitted");
+    const register = async (event) => {
+        event.preventDefault();
+
+        let body = JSON.stringify({
+            username: event.target.username.value,
+            screenname: event.target.screenname.value,
+            email: event.target.email.value,
+            password: event.target.password.value,
+            remember: false
+        })
+
+        try {
+            await axios.post(process.env.REACT_APP_API + '/register',
+                body,
+                {
+                    headers: { 'Content-Type': 'application/json' },
+                    withCredentials: true
+                }
+            );
+            window.location.reload(false);
+        } catch (e) {
+            console.log(e)
+        }
     };
 
     return (
@@ -17,16 +39,16 @@ const Register = () => {
                 }}
             >
                 <Typography variant="h5">Register</Typography>
-                <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+                <Box component="form" noValidate onSubmit={register} sx={{ mt: 3 }}>
                     <Grid container spacing={2}>
                         <Grid item xs={12} sm={6}>
                             <TextField
                                 autoComplete="given-name"
-                                name="firstName"
+                                name="screenname"
                                 required
                                 fullWidth
-                                id="firstName"
-                                label="First Name"
+                                id="screenname"
+                                label="Screen Name"
                                 autoFocus
                             />
                         </Grid>
@@ -34,9 +56,9 @@ const Register = () => {
                             <TextField
                                 required
                                 fullWidth
-                                id="lastName"
-                                label="Last Name"
-                                name="lastName"
+                                id="username"
+                                label="Username"
+                                name="username"
                                 autoComplete="family-name"
                             />
                         </Grid>
