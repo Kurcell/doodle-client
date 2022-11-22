@@ -7,7 +7,7 @@ export const AuthProvider = ({ children }) => {
     const [session, setSession] = useState({user: null, authenticated: false, loading: true});
 
     useEffect(() => {
-        axios.get('http://localhost:5000/verify',
+        axios.get(process.env.REACT_APP_SOCIALS + '/verify',
             {
                 headers: { 'Content-Type': 'application/json' },
                 withCredentials: true

@@ -14,7 +14,7 @@ function Login(props) {
         })
 
         try {
-            await axios.post(process.env.REACT_APP_API + '/login',
+            await axios.post(process.env.REACT_APP_SOCIALS + '/login',
                 body,
                 {
                     headers: { 'Content-Type': 'application/json' },

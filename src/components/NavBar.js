@@ -12,7 +12,7 @@ const Header = () => {
 
     const logout = async () => {
         try {
-            await axios.get(process.env.REACT_APP_API + '/logout',
+            await axios.get(process.env.REACT_APP_SOCIALS + '/logout',
                 {
                     headers: { 'Content-Type': 'application/json' },
                     withCredentials: true

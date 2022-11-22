@@ -6,7 +6,7 @@ function Feed(props) {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    fetch(process.env.REACT_APP_API + '/posts')
+    fetch(process.env.REACT_APP_SOCIALS + '/posts')
       .then((response) => response.json())
       .then((data) => setPosts(data));
   }, [])
