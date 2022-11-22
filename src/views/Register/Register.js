@@ -15,7 +15,7 @@ const Register = () => {
         })
 
         try {
-            await axios.post(process.env.REACT_APP_API + '/register',
+            await axios.post(process.env.REACT_APP_SOCIALS + '/register',
                 body,
                 {
                     headers: { 'Content-Type': 'application/json' },
