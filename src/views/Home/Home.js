@@ -1,10 +1,21 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import AuthContext from '../../context/AuthProvider';
 import Feed from '../../components/Feed'
 
 const Home = () => {
+    const { session } = useContext(AuthContext)
     return (
         <div>
-            <Feed />
+            {session.loading ?
+                <>
+                    Loading feed...
+                </>
+                :
+                <>
+                    <Feed />
+                </>
+            }
+            
         </div>
     )
 }

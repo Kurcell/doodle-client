@@ -1,9 +1,30 @@
-import React from 'react'
+import React from 'react';
+import axios from 'axios';
 import { Box, Button, TextField, Typography } from "@mui/material";
 
-function Login() {
-    const handleSubmit = () => {
-        console.log("submitted");
+function Login(props) {
+
+    const login = async (event) => {
+        event.preventDefault();
+
+        let body = JSON.stringify({
+            email: event.target.email.value,
+            password: event.target.password.value,
+            remember: false
+        })
+
+        try {
+            await axios.post(process.env.REACT_APP_API + '/login',
+                body,
+                {
+                    headers: { 'Content-Type': 'application/json' },
+                    withCredentials: true
+                }
+            );
+            window.location.reload(false);
+        } catch (e) {
+            console.log(e)
+        }
     };
 
     return (
@@ -17,7 +38,7 @@ function Login() {
                 }}
             >
                 <Typography variant="h5">Log In</Typography>
-                <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                <Box component="form" onSubmit={login} noValidate sx={{ mt: 1 }}>
                     <TextField
                         margin="normal"
                         required
