@@ -22,7 +22,6 @@ function App() {
             <Router>
                 <NavBar />
                 <Routes>
-                <Route path="/" element={<Home />} />
                     <Route path="/" element={<Home />} />
                     <Route path="/easel" element={!session.authenticated ? <Navigate to="/" /> : <Easel />} />
                     <Route path="/login" element={session.authenticated || session.loading ? <Navigate to="/" /> : <Login />} />
