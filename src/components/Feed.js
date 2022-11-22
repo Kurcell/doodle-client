@@ -6,7 +6,7 @@ function Feed(props) {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:5000/posts')
+    fetch(process.env.REACT_APP_API + '/posts')
       .then((response) => response.json())
       .then((data) => setPosts(data));
   }, [])

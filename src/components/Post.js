@@ -5,17 +5,15 @@ import {
     CardHeader,
     CardMedia,
     Card,
-    CardActions,
     Grid
 } from "@mui/material";
 import calculateTime from "../common/common";
 
 const Post = (props) => {
 
-  const [user, setUser] = useState({});
     return (
       <Grid item lg={3} md={4} sm={6} xs={12}>
-          <Card width="100%">
+          <Card variant="outlined" width="100%">
             <CardHeader
               avatar={<Avatar src={"https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg"} />}
               title={
