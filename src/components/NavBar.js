@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { AppBar, Box, Button, Tab, Tabs, Toolbar } from "@mui/material";
-import BrushIcon from '@mui/icons-material/Brush';
 import { Link } from "react-router-dom";
 import axios from 'axios';
+import DudolIcon from "../icons/DudolIcon";
 
 const Header = () => {
     const routes = ["/", "/profile", "/settings", "/easel"];
@@ -25,7 +25,7 @@ const Header = () => {
         <Box>
             <AppBar position="static">
                 <Toolbar>
-                    <BrushIcon />
+                    <DudolIcon />
                     <Tabs
                         value={selectedTab}
                         onChange={(e, selectedTab) => setSelectedTab(selectedTab)}
