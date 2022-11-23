@@ -6,8 +6,10 @@ const themeOptions = createTheme({
             main: '#94b49f',
         },
         secondary: {
-            main: '#789395',
-        },
+            light: '#D3C9B7',
+            main: '#B4946C',
+            dark: '#773F1A',
+        }
     },
 });
 
