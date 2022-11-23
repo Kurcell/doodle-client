@@ -30,8 +30,9 @@ const LogInBox = () => {
                     width: 384,
                     height: 424,
                     padding: 2,
-                    backgroundColor: 'secondary.light'
-
+                    backgroundColor: 'secondary.light',
+                    boxShadow: 1,
+                    borderRadius: 2
                 }}>
                     <Box component="form" onSubmit={login} noValidate>
                         <TextField
