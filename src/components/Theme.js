@@ -11,6 +11,14 @@ const themeOptions = createTheme({
             dark: '#773F1A',
         }
     },
+    typography: {
+        allVariants: {
+            fontFamily: "'Varela Round', sans-serif",
+        },
+        h1: {
+            fontFamily: "'Rubik Mono One', sans-serif",
+        },
+    },
 });
 
 export default themeOptions;
