@@ -38,4 +38,12 @@ export const landingTheme = createTheme({
             default: '#94b49f',
         }
     },
+    typography: {
+        allVariants: {
+            fontFamily: "'Varela Round', sans-serif",
+        },
+        h1: {
+            fontFamily: "'Rubik Mono One', sans-serif",
+        },
+    },
 });

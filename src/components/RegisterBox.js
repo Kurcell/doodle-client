@@ -4,7 +4,7 @@ import React from "react";
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 import PersonIcon from '@mui/icons-material/Person';
 
-const RegisterBox = () => {
+const RegisterBox = ({toggleLogIn}) => {
     const register = async (event) => {
         event.preventDefault();
 
@@ -32,7 +32,7 @@ const RegisterBox = () => {
 
     return (<Box sx={{
             width: 384,
-            height: 464,
+            height: 484,
             padding: 2,
             backgroundColor: 'secondary.light',
             boxShadow: 1,
@@ -102,10 +102,18 @@ const RegisterBox = () => {
                     variant="filled"
                     sx={{mb: 5}}
                 />
-                <Button sx={{ height: 56}} type="submit" fullWidth color="secondary" variant="contained">Register</Button>
+                <Button sx={{ height: 56}}
+                        type="submit"
+                        fullWidth
+                        color="secondary"
+                        variant="contained">Register</Button>
             </Box>
             <Divider sx={{m: 5}} />
-            <Button sx={{ height: 56}} fullWidth color="secondary" variant="contained">Log In</Button>
+            <Button sx={{ height: 56}}
+                    fullWidth color="secondary"
+                    variant="contained"
+                    onClick={() => toggleLogIn(true)}
+            >Log In</Button>
         </Box>);
 }
 
