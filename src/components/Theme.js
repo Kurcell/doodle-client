@@ -14,6 +14,14 @@ export const appTheme = createTheme({
             default: '#D3C9B7',
         }
     },
+    typography: {
+        allVariants: {
+            fontFamily: "'Varela Round', sans-serif",
+        },
+        h1: {
+            fontFamily: "'Rubik Mono One', sans-serif",
+        },
+    },
 });
 
 export const landingTheme = createTheme({

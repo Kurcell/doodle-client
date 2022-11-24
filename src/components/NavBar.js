@@ -1,12 +1,10 @@
-import React, { useState, useContext } from 'react';
-import { AppBar, Box, Button, Tab, Tabs, Toolbar, Typography } from "@mui/material";
-import BrushIcon from '@mui/icons-material/Brush';
+import React, { useState } from 'react';
+import { AppBar, Box, Button, Tab, Tabs, Toolbar } from "@mui/material";
 import { Link } from "react-router-dom";
-import AuthContext from '../context/AuthProvider';
 import axios from 'axios';
+import DudolIcon from "../icons/DudolIcon";
 
 const Header = () => {
-    const { session } = useContext(AuthContext)
     const routes = ["/", "/profile", "/settings", "/easel"];
     const [selectedTab, setSelectedTab] = useState(routes[0]);
 
@@ -27,55 +25,24 @@ const Header = () => {
         <Box>
             <AppBar position="static">
                 <Toolbar>
-                    <BrushIcon />
+                    <DudolIcon />
                     <Tabs
                         value={selectedTab}
                         onChange={(e, selectedTab) => setSelectedTab(selectedTab)}
                         textColor="inherit"
                         indicatorColor="secondary">
-                        <Tab label="home" value={routes[0]} component={Link} to={routes[0]} />
-                        {session.authenticated && <Tab label="easel" value={routes[3]} component={Link} to={routes[3]} />}
-                        {session.authenticated && <Tab label="profile" value={routes[1]} component={Link} to={routes[1]} />}
-                        {session.authenticated && <Tab label="settings" value={routes[2]} component={Link} to={routes[2]} />}
+                        <Tab disableRipple label="home" value={routes[0]} component={Link} to={routes[0]} />
+                        <Tab disableRipple label="easel" value={routes[3]} component={Link} to={routes[3]} />
+                        <Tab disableRipple label="profile" value={routes[1]} component={Link} to={routes[1]} />
+                        <Tab disableRipple label="settings" value={routes[2]} component={Link} to={routes[2]} />
                     </Tabs>
-                    {!session.loading ? session.authenticated ?
-                        <>
-                            <Typography
-                                sx={{
-                                    marginLeft: "auto",
-                                    display: session.authenticated
-                                }}>
-                                {session.user.screenname}
-                            </Typography>
-                            <Button
-                                variant="contained"
-                                color="secondary"
-                                onClick={logout}
-                                sx={{ marginLeft: "10px" }}>
-                                Log out
-                            </Button>
-                        </>
-                        :
-                        <>
-                            <Button
-                                variant="contained"
-                                color="secondary"
-                                component={Link}
-                                to="/login"
-                                sx={{ marginLeft: "auto" }}>
-                                Login
-                            </Button>
-                            <Button
-                                variant="contained"
-                                color="secondary"
-                                component={Link}
-                                to="/register"
-                                sx={{ marginLeft: "10px" }}>
-                                Register
-                            </Button>
-                        </>
-                        :
-                        <></>}
+                    <Button
+                        variant="contained"
+                        color="secondary"
+                        onClick={logout}
+                        sx={{ marginLeft: "auto" }}>
+                        Log out
+                    </Button>
                 </Toolbar>
             </AppBar>
         </Box>
