@@ -13,10 +13,12 @@ export const AuthProvider = ({ children }) => {
                 withCredentials: true
             })
             .then(res => {
-                setSession({user: res.data.user, authenticated: res.data.auth, loading: false})
+                setSession({user: res.data.user, authenticated: true, loading: false})
             })
             .catch(e => {
-                console.log(e)
+                if(e.response && e.response.status == 401){
+                    setSession({user: null, authenticated: false, loading: false})
+                }
             })
     }, [])
 
