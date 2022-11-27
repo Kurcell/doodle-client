@@ -2,7 +2,7 @@ import { Box, Button, TextField, Divider } from "@mui/material";
 import axios from 'axios';
 import React from "react";
 
-const LogInBox = () => {
+const LogInBox = ({toggleLogIn}) => {
     const login = async (event) => {
         event.preventDefault();
 
@@ -30,8 +30,9 @@ const LogInBox = () => {
                     width: 384,
                     height: 424,
                     padding: 2,
-                    backgroundColor: 'secondary.light'
-
+                    backgroundColor: 'secondary.light',
+                    boxShadow: 1,
+                    borderRadius: 2
                 }}>
                     <Box component="form" onSubmit={login} noValidate>
                         <TextField
@@ -57,10 +58,19 @@ const LogInBox = () => {
                             variant="filled"
                             sx={{mb: 5}}
                         />
-                        <Button sx={{ height: 56}} type="submit" fullWidth color="secondary" variant="contained">Log In</Button>
+                        <Button sx={{ height: 56}}
+                                type="submit"
+                                fullWidth
+                                color="secondary"
+                                variant="contained">Log In</Button>
                     </Box>
                     <Divider sx={{m: 5}} />
-                    <Button sx={{ height: 56}} fullWidth color="secondary" variant="contained">Register</Button>
+                    <Button sx={{ height: 56}}
+                            fullWidth
+                            color="secondary"
+                            variant="contained"
+                            onClick={() => toggleLogIn(false)}
+                    >Register</Button>
                 </Box>);
 }
 
