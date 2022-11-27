@@ -1,7 +1,5 @@
-import Paper from "@mui/material/Paper";
-import { Box } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
-import CanvasDrawer from "./CanvasDrawer";
+import Stand from "./Stand.js";
 
 const canvasFunctions = ["startStroke", "endStroke", "draw"];
 
@@ -88,40 +86,16 @@ const Canvas = () => {
   };
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexWrap: "wrap",
-        "& > :not(style)": {
-          m: 1,
-          width: 500,
-          height: 500,
-        },
-      }}
-    >
-      <Paper
-        square
-        elevation={12}
-        sx={{
-          bgcolor: "white",
-        }}
-      >
-        <canvas
-          onMouseDown={startStroke}
-          onMouseUp={endStroke}
-          onMouseMove={draw}
-          ref={canvasRef}
-          width={`500px`}
-          height={`500px`}
-        />
-      </Paper>
-      <CanvasDrawer
-        color={lineColor}
-        setColor={setLineColor}
-        setOpacity={setLineOpacity}
-        setWidth={setLineWidth}
+    <Stand>
+      <canvas
+        onMouseDown={startStroke}
+        onMouseUp={endStroke}
+        onMouseMove={draw}
+        ref={canvasRef}
+        width={`500px`}
+        height={`500px`}
       />
-    </Box>
+    </Stand>
   );
 };
 
