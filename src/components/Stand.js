@@ -9,8 +9,8 @@ const useStyles = makeStyles({
   },
   left: {
     position: "absolute",
-    left: "123px",
-    top: "0px",
+    left: "24.6%",
+    top: "0%",
     height: "780px",
     width: "50px",
 
@@ -19,8 +19,8 @@ const useStyles = makeStyles({
   },
   middle: {
     position: "absolute",
-    left: "225px",
-    top: "0px",
+    left: "45%",
+    top: "0%",
     height: "700px",
     width: "50px",
 
@@ -28,8 +28,8 @@ const useStyles = makeStyles({
   },
   right: {
     position: "absolute",
-    left: "327px",
-    top: "0px",
+    left: "65.4%",
+    top: "0%",
     height: "780px",
     width: "50px",
 
@@ -38,8 +38,8 @@ const useStyles = makeStyles({
   },
   canvas: {
     position: "absolute",
-    left: "0px",
-    top: "70px",
+    left: "0%",
+    top: "10%",
     height: "500px",
     width: "500px",
 
