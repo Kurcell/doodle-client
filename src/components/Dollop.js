@@ -67,16 +67,17 @@ const Dollop = ({
   };
 
   const extractHex = (colorObject) => {
-    setDollopColor(colorObject.hex);
-
     if (open) {
-      setLineColor(dollopColor);
-      setLineWidth(dollopSize);
+      setDollopColor(colorObject.hex);
+      setLineColor(colorObject.hex);
     }
   };
 
   const handleSizeSlider = (event, newSize) => {
-    setDollopSize(newSize);
+    if (open) {
+      setDollopSize(newSize);
+      setLineWidth(newSize);
+    }
   };
 
   return (

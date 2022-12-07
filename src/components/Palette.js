@@ -28,7 +28,7 @@ const Palette = ({ setLineWidth, setLineColor }) => {
         setLineColor={setLineColor}
       />
       <Dollop
-        color={"#557660"}
+        color={"#000000"}
         openColorPicker={openColorPicker}
         setOpenColorPicker={setOpenColorPicker}
         setLineWidth={setLineWidth}

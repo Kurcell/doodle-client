@@ -7,16 +7,22 @@ import Palette from "../../components/Palette";
 const Easel = () => {
   const [lineWidth, setLineWidth] = useState(5);
   const [lineColor, setLineColor] = useState("#000000");
+  const [instructions, setInstructions] = useState("");
 
   return (
     <Grid container spacing={2}>
       <Grid item xs={6}>
-        <Box sx={{ pl: "10%" }}>
-          <Canvas lineWidth={lineWidth} lineColor={lineColor} />
+        <Box sx={{ pl: "25%", pt: "5%" }}>
+          <Canvas
+            lineWidth={lineWidth}
+            lineColor={lineColor}
+            instructions={instructions}
+            setInstructions={setInstructions}
+          />
         </Box>
       </Grid>
       <Grid item xs={6}>
-        <Box sx={{ pt: "20%" }}>
+        <Box sx={{ pt: "20%", pl: "10%" }}>
           <Palette setLineWidth={setLineWidth} setLineColor={setLineColor} />
         </Box>
       </Grid>
