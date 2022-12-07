@@ -24,7 +24,7 @@ export const AuthProvider = ({ children }) => {
         });
       })
       .catch((e) => {
-        if (e.response && e.response.status == 401) {
+        if (e.response && e.response.status === 401) {
           setSession({ user: null, authenticated: false, loading: false });
         }
       });
