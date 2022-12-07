@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Post from "../components/Post";
-import { Grid } from "@mui/material";
 
-function Feed(props) {
+function Feed() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
@@ -13,11 +12,9 @@ function Feed(props) {
 
   return (
     <>
-      <Grid container spacing={4} marginTop="1vh">
-        {posts.map((post) => {
-          return <Post post={post} />;
-        })}
-      </Grid>
+      {posts.map((post) => {
+        return <Post post={post} />;
+      })}
     </>
   );
 }
