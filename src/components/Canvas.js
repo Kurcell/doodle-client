@@ -3,15 +3,12 @@ import Stand from "./Stand.js";
 
 const canvasFunctions = ["startStroke", "endStroke", "draw"];
 
-const Canvas = () => {
+const Canvas = ({ lineWidth, lineColor }) => {
   const canvasRef = useRef(null);
   const contextRef = useRef(null);
 
   // Initial context for canvas
   const [isDrawing, setIsDrawing] = useState(false);
-  const [lineWidth, setLineWidth] = useState(5);
-  const [lineColor, setLineColor] = useState("#000000");
-  const [lineOpacity, setLineOpacity] = useState(0.1);
 
   // Instruction Context
   const [instructions, setInstructions] = useState([]);
@@ -22,11 +19,11 @@ const Canvas = () => {
     const context = canvas.getContext("2d");
     context.lineCap = "round";
     context.lineJoin = "round";
-    context.globalAlpha = lineOpacity;
+    context.globalAlpha = 1;
     context.strokeStyle = lineColor;
     context.lineWidth = lineWidth;
     contextRef.current = context;
-  }, [lineColor, lineOpacity, lineWidth]);
+  }, [lineColor, lineWidth]);
 
   // When user clicks, "ink" is deposited
   const startStroke = (e) => {
@@ -40,7 +37,6 @@ const Canvas = () => {
         ex: e.nativeEvent.offsetX,
         ey: e.nativeEvent.offsetY,
         color: lineColor,
-        opacity: lineOpacity,
         width: lineWidth,
       },
     ]);
@@ -57,7 +53,6 @@ const Canvas = () => {
         ex: null,
         ey: null,
         color: null,
-        opacity: null,
         width: null,
       },
     ]);
@@ -78,11 +73,9 @@ const Canvas = () => {
         ex: e.nativeEvent.offsetX,
         ey: e.nativeEvent.offsetY,
         color: lineColor,
-        opacity: lineOpacity,
         width: lineWidth,
       },
     ]);
-    console.log(lineOpacity);
   };
 
   return (
