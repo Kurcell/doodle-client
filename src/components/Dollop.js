@@ -3,45 +3,8 @@ import CloseIcon from "@mui/icons-material/Close";
 import BrushIcon from "@mui/icons-material/Brush";
 import LineWeightIcon from "@mui/icons-material/LineWeight";
 import Grow from "@mui/material/Grow";
-import { makeStyles } from "@mui/styles";
 import { ChromePicker } from "react-color";
 import { useState } from "react";
-
-const useStyles = makeStyles({
-  drop: {
-    position: "relative",
-    width: "100px",
-    height: "100px",
-    borderRadius: "50%",
-
-    boxShadow: "0px 7px 7px rgba(0, 0, 0, 0.25)",
-  },
-  button: {
-    position: "absolute",
-    top: "25%",
-    left: "25%",
-    width: "50px",
-    height: "50px",
-  },
-  popover: {
-    position: "absolute",
-    top: "60%",
-    left: "50%",
-    width: "300px",
-    height: "300px",
-
-    background: "#773F1A",
-  },
-  color_picker: {
-    position: "absolute",
-    top: "5%",
-    left: "12.5%",
-    width: "230px",
-    height: "250px",
-  },
-});
-
-//
 
 const Dollop = ({
   color,
@@ -50,7 +13,6 @@ const Dollop = ({
   setLineWidth,
   setLineColor,
 }) => {
-  const classes = useStyles(color);
   const [dollopColor, setDollopColor] = useState(color);
   const [dollopSize, setDollopSize] = useState(5);
   const [open, setOpen] = useState(false);
@@ -81,11 +43,27 @@ const Dollop = ({
   };
 
   return (
-    <Box sx={{ bgcolor: dollopColor }} className={classes.drop}>
+    <Box
+      sx={{
+        bgcolor: dollopColor,
+        position: "relative",
+        width: "100px",
+        height: "100px",
+        borderRadius: "50%",
+
+        boxShadow: "0px 7px 7px rgba(0, 0, 0, 0.25)",
+      }}
+    >
       {dollopColor === "#94B49F" ? (
         <IconButton
           color="secondary.dark"
-          className={classes.button}
+          sx={{
+            position: "absolute",
+            top: "25%",
+            left: "25%",
+            width: "50px",
+            height: "50px",
+          }}
           onClick={handleClick}
         >
           {open ? <CloseIcon /> : <BrushIcon />}
@@ -93,15 +71,39 @@ const Dollop = ({
       ) : (
         <IconButton
           color="primary"
-          className={classes.button}
+          sx={{
+            position: "absolute",
+            top: "25%",
+            left: "25%",
+            width: "50px",
+            height: "50px",
+          }}
           onClick={handleClick}
         >
           {open ? <CloseIcon /> : <BrushIcon />}
         </IconButton>
       )}
       <Grow in={open} style={{ transformOrigin: "0 0 0" }}>
-        <Box className={classes.popover}>
-          <Box className={classes.color_picker}>
+        <Box
+          sx={{
+            position: "absolute",
+            top: "60%",
+            left: "50%",
+            width: "300px",
+            height: "300px",
+
+            background: "#773F1A",
+          }}
+        >
+          <Box
+            sx={{
+              position: "absolute",
+              top: "5%",
+              left: "12.5%",
+              width: "230px",
+              height: "250px",
+            }}
+          >
             <ChromePicker
               color={dollopColor}
               disableAlpha
@@ -109,7 +111,7 @@ const Dollop = ({
             />
             <Grid container spacing={2} alignItems="center">
               <Grid item>
-                <LineWeightIcon color={"secondary"} />
+                <LineWeightIcon color="#D3C9B7" />
               </Grid>
               <Grid item xs>
                 <Slider
