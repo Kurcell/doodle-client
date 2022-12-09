@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Post from "../components/Post";
 import Stack from "@mui/material/Stack";
-import { Box, Grid } from "@mui/material";
+import { Box, CircularProgress, Grid } from "@mui/material";
 import Arrow from "./Arrow";
 import axios from "axios";
 
@@ -56,11 +56,15 @@ function Feed() {
       direction="column"
       mt={7}
     >
-      <Stack direction="row" justifyContent="space-between" spacing={30}>
-        <Arrow direction={"l"} onClick={prev} />
-        <Box>{postRef.current}</Box>
-        <Arrow direction={"r"} onClick={next} />
-      </Stack>
+      {postRef == null ? (
+        <CircularProgress />
+      ) : (
+        <Stack direction="row" justifyContent="space-between" spacing={30}>
+          <Arrow direction={"l"} onClick={prev} />
+          <Box>{postRef.current}</Box>
+          <Arrow direction={"r"} onClick={next} />
+        </Stack>
+      )}
     </Grid>
   );
 }
