@@ -3,12 +3,11 @@ import { Avatar, Typography, Box, IconButton } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import calculateTime from "../common/common";
 
-const Post = (props) => {
+const Post = ({ screenname, username, date }) => {
   const [liked, setLiked] = useState(false);
 
   const like = () => {
     setLiked((prev) => !prev);
-    console.log(props.post);
   };
 
   return (
@@ -94,7 +93,7 @@ const Post = (props) => {
             width: "124px",
           }}
         >
-          {props.post.screenname}
+          {screenname}
         </Typography>
         <Typography
           sx={{
@@ -106,7 +105,7 @@ const Post = (props) => {
             width: "124px",
           }}
         >
-          @{props.post.username}
+          @{username}
         </Typography>
         <Typography
           sx={{
@@ -121,7 +120,7 @@ const Post = (props) => {
             width: "61px",
           }}
         >
-          {calculateTime(props.post.createdat)}
+          {calculateTime(date)}
         </Typography>
       </Box>
     </Box>

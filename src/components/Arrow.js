@@ -1,8 +1,8 @@
 import { Box, Button } from "@mui/material";
 
-const Arrow = ({ direction }) => {
+const Arrow = ({ direction, onClick }) => {
   return (
-    <Button>
+    <Button onClick={onClick}>
       <Box
         sx={{
           position: "relative",
