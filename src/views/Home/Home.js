@@ -4,17 +4,7 @@ import Feed from "../../components/Feed";
 
 const Home = () => {
   const { session } = useContext(AuthContext);
-  return (
-    <div>
-      {session.loading ? (
-        <>Loading feed...</>
-      ) : (
-        <>
-          <Feed />
-        </>
-      )}
-    </div>
-  );
+  return <div>{session.loading ? <>Loading feed...</> : <Feed />}</div>;
 };
 
 export default Home;
