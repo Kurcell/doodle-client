@@ -1,14 +1,67 @@
-import { useState } from "react";
+import { useContext, useEffect, useState, useRef } from "react";
+import AuthContext from "../context/AuthProvider";
 import { Avatar, Typography, Box, IconButton } from "@mui/material";
-import FavoriteIcon from "@mui/icons-material/Favorite";
+import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 import calculateTime from "../common/common";
+import axios from "axios";
 
-const Post = ({ screenname, username, date }) => {
+const Post = ({ post }) => {
+  const { session } = useContext(AuthContext);
   const [liked, setLiked] = useState(false);
+  const [likeCount, setLikeCount] = useState(post.likes);
+  const likeCountRef = useRef(
+    <Typography
+      sx={{
+        fontSize: "14px",
+        display: "flex",
+        justifyContent: "center",
+        position: "absolute",
+        left: "92.3%",
+        top: "92%",
+        height: "24px",
+        width: "44px",
+      }}
+    >
+      {post.likes}
+    </Typography>
+  );
 
-  const like = () => {
+  const like = async () => {
     setLiked((prev) => !prev);
+
+    let body = JSON.stringify({
+      uid: session.user.uid,
+      pid: post.pid,
+    });
+
+    try {
+      await axios.put(process.env.REACT_APP_SOCIALS + "/post/like", body);
+      await axios
+        .get(process.env.REACT_APP_SOCIALS + "/post/" + post.pid)
+        .then((response) => setLikeCount(response.data.likes));
+    } catch (e) {
+      console.error(`Error" ${e}`);
+    }
   };
+
+  useEffect(() => {
+    likeCountRef.current = (
+      <Typography
+        sx={{
+          fontSize: "14px",
+          display: "flex",
+          justifyContent: "center",
+          position: "absolute",
+          left: "92.3%",
+          top: "92%",
+          height: "24px",
+          width: "44px",
+        }}
+      >
+        {likeCount}
+      </Typography>
+    );
+  }, [likeCount]);
 
   return (
     <Box sx={{ position: "relative", width: "572px", height: "703px" }}>
@@ -58,12 +111,13 @@ const Post = ({ screenname, username, date }) => {
           onClick={like}
         >
           {liked ? (
-            <FavoriteIcon sx={{ color: "#E60000" }} />
+            <WorkspacePremiumIcon sx={{ color: "#4169E1" }} />
           ) : (
-            <FavoriteIcon />
+            <WorkspacePremiumIcon />
           )}
         </IconButton>
       </Box>
+      <Box>{likeCountRef.current}</Box>
       <Box
         sx={{
           position: "absolute",
@@ -93,7 +147,7 @@ const Post = ({ screenname, username, date }) => {
             width: "124px",
           }}
         >
-          {screenname}
+          {post.screenname}
         </Typography>
         <Typography
           sx={{
@@ -105,7 +159,7 @@ const Post = ({ screenname, username, date }) => {
             width: "124px",
           }}
         >
-          @{username}
+          @{post.username}
         </Typography>
         <Typography
           sx={{
@@ -120,7 +174,7 @@ const Post = ({ screenname, username, date }) => {
             width: "61px",
           }}
         >
-          {calculateTime(date)}
+          {calculateTime(post.createdat)}
         </Typography>
       </Box>
     </Box>

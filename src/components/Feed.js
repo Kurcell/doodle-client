@@ -11,14 +11,12 @@ function Feed() {
   const postRef = useRef(null);
 
   const next = () => {
-    console.log(currentPost);
     if (currentPost < posts.length - 1) {
       setCurrentPost(currentPost + 1);
     }
   };
 
   const prev = () => {
-    console.log(currentPost);
     if (currentPost > 0) {
       setCurrentPost(currentPost - 1);
     }
@@ -36,15 +34,8 @@ function Feed() {
   }, []);
 
   useEffect(() => {
-    console.log(posts);
     if (posts.length > 0) {
-      postRef.current = (
-        <Post
-          screenname={posts[currentPost].screenname}
-          username={posts[currentPost].username}
-          date={posts[currentPost].createdat}
-        />
-      );
+      postRef.current = <Post post={posts[currentPost]} />;
     }
   }, [posts, currentPost]);
 
