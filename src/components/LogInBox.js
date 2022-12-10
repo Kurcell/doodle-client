@@ -6,7 +6,7 @@ const LogInBox = ({ toggleLogIn }) => {
   const login = async (event) => {
     event.preventDefault();
 
-    let body = JSON.stringify({
+    const body = JSON.stringify({
       email: event.target.email.value,
       password: event.target.password.value,
       remember: false,
