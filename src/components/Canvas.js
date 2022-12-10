@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import Stand from "./Stand.js";
+import { stroke } from "../util/drawing";
+
 const canvasFunctions = ["startStroke", "endStroke", "draw"];
 
 const Canvas = ({ lineWidth, lineColor, instructions, setInstructions }) => {
@@ -25,25 +27,30 @@ const Canvas = ({ lineWidth, lineColor, instructions, setInstructions }) => {
 
   // When user clicks, "ink" is deposited
   const startStroke = (e) => {
-    contextRef.current.beginPath();
-    contextRef.current.moveTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+    stroke(
+      canvasFunctions[0],
+      contextRef.current,
+      e.nativeEvent.offsetX,
+      e.nativeEvent.offsetY
+    );
     setIsDrawing(true);
 
     const newInstruction =
       instructions.length === 0
-        ? `{fn:${canvasFunctions[0]},ex:${e.nativeEvent.offsetX},ey:${e.nativeEvent.offsetY},color:${lineColor},width:${lineWidth}}`
-        : `;{fn:${canvasFunctions[0]},ex:${e.nativeEvent.offsetX},ey:${e.nativeEvent.offsetY},color:${lineColor},width:${lineWidth}}`;
+        ? `{"fn":"${canvasFunctions[0]}","ex":${e.nativeEvent.offsetX},"ey":${e.nativeEvent.offsetY},"color":"${lineColor}","width":${lineWidth}}`
+        : `;{"fn":"${canvasFunctions[0]}","ex":${e.nativeEvent.offsetX},"ey":${e.nativeEvent.offsetY},"color":"${lineColor}","width":${lineWidth}}`;
 
     setInstructions((instructions) => instructions + newInstruction);
   };
 
   // When user stops clicking, pen is lifted
   const endStroke = () => {
-    contextRef.current.closePath();
+    stroke(canvasFunctions[1], contextRef.current, null, null);
     setIsDrawing(false);
-    const newInstruction = `;{fn:${
+    const newInstruction = `;{"fn":"${
       canvasFunctions[1]
-    },ex:${null},ey:${null},color:${null},width:${null}}`;
+    }","ex":${null},"ey":${null},"color":${null},"width":${null}}`;
+
     setInstructions((instructions) => instructions + newInstruction);
   };
 
@@ -51,11 +58,14 @@ const Canvas = ({ lineWidth, lineColor, instructions, setInstructions }) => {
     if (!isDrawing) {
       return;
     }
-    contextRef.current.lineTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+    stroke(
+      canvasFunctions[2],
+      contextRef.current,
+      e.nativeEvent.offsetX,
+      e.nativeEvent.offsetY
+    );
 
-    contextRef.current.stroke();
-
-    const newInstruction = `;{fn:${canvasFunctions[2]},ex:${e.nativeEvent.offsetX},ey:${e.nativeEvent.offsetY},color:${lineColor},width:${lineWidth}}`;
+    const newInstruction = `;{"fn":"${canvasFunctions[2]}","ex":${e.nativeEvent.offsetX},"ey":${e.nativeEvent.offsetY},"color":"${lineColor}","width":${lineWidth}}`;
     setInstructions((instructions) => instructions + newInstruction);
   };
 
