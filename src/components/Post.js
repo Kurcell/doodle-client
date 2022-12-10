@@ -114,7 +114,7 @@ const Post = ({ screenname, username, date }) => {
             position: "absolute",
             display: "flex",
             justifyContent: "flex-end",
-            left: "130px",
+            left: "63.7%",
             top: "69%",
             height: "17px",
             width: "61px",

@@ -14,7 +14,7 @@ const Arrow = ({ direction, onClick }) => {
           sx={{
             position: "absolute",
             left: "4%",
-            top: "39px",
+            top: "39%",
             width: "150px",
             height: "22px",
             background: "#773F1A",
