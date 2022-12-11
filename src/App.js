@@ -8,7 +8,6 @@ import {
 } from "react-router-dom";
 import Error404 from "./views/Error404";
 import Profile from "./views/Profile";
-import Settings from "./views/Settings";
 import Home from "./views/Home";
 import Landing from "./views/Landing";
 import Easel from "./views/Easel";
@@ -44,12 +43,6 @@ function App() {
           <Route
             path="/profile"
             element={!session.authenticated ? <Navigate to="/" /> : <Profile />}
-          />
-          <Route
-            path="/settings"
-            element={
-              !session.authenticated ? <Navigate to="/" /> : <Settings />
-            }
           />
         </Routes>
       </Router>

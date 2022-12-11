@@ -1,12 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AppBar, Box, Button, Tab, Tabs, Toolbar } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import DudolIcon from "../icons/DudolIcon";
 
+const routes = ["/", "/easel", "/profile"];
+
 const Header = () => {
-  const routes = ["/", "/profile", "/settings", "/easel"];
   const [selectedTab, setSelectedTab] = useState(routes[0]);
+  const location = useLocation();
+
+  useEffect(() => {
+    switch (location.pathname) {
+      case "/home":
+        setSelectedTab(routes[0]);
+        break;
+      case "/easel":
+        setSelectedTab(routes[1]);
+        break;
+      case "/profile":
+        setSelectedTab(routes[2]);
+        break;
+      default:
+        setSelectedTab(routes[0]);
+    }
+  }, [location]);
 
   const logout = async () => {
     try {
@@ -41,20 +59,13 @@ const Header = () => {
             <Tab
               disableRipple
               label="easel"
-              value={routes[3]}
-              component={Link}
-              to={routes[3]}
-            />
-            <Tab
-              disableRipple
-              label="profile"
               value={routes[1]}
               component={Link}
               to={routes[1]}
             />
             <Tab
               disableRipple
-              label="settings"
+              label="profile"
               value={routes[2]}
               component={Link}
               to={routes[2]}
