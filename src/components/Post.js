@@ -7,9 +7,12 @@ import axios from "axios";
 
 const Post = ({ post }) => {
   const { session } = useContext(AuthContext);
+  const likeIconStatusRef = useRef(false);
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(post.likes);
-  const likeCountRef = useRef(
+  const likeIconRef = useRef(<WorkspacePremiumIcon />);
+  const likeCountRef = useRef(post.likes);
+  const likeCountCompRef = useRef(
     <Typography
       sx={{
         fontSize: "14px",
@@ -26,26 +29,20 @@ const Post = ({ post }) => {
     </Typography>
   );
 
-  const like = async () => {
-    setLiked((prev) => !prev);
-
-    let body = JSON.stringify({
-      uid: session.user.uid,
-      pid: post.pid,
-    });
-
-    try {
-      await axios.put(process.env.REACT_APP_SOCIALS + "/post/like", body);
-      await axios
-        .get(process.env.REACT_APP_SOCIALS + "/post/" + post.pid)
-        .then((response) => setLikeCount(response.data.likes));
-    } catch (e) {
-      console.error(`Error" ${e}`);
-    }
-  };
+  useEffect(() => {
+    checkLiked();
+  }, []);
 
   useEffect(() => {
-    likeCountRef.current = (
+    if (likeIconStatusRef.current) {
+      likeIconRef.current = <WorkspacePremiumIcon sx={{ color: "#4169E1" }} />;
+    } else {
+      likeIconRef.current = <WorkspacePremiumIcon />;
+    }
+  }, [likeIconStatusRef]);
+
+  useEffect(() => {
+    likeCountCompRef.current = (
       <Typography
         sx={{
           fontSize: "14px",
@@ -58,10 +55,57 @@ const Post = ({ post }) => {
           width: "44px",
         }}
       >
-        {likeCount}
+        {likeCountRef.current}
       </Typography>
     );
-  }, [likeCount]);
+  }, [likeCountRef]);
+
+  const checkLiked = () => {
+    axios
+      .get(
+        process.env.REACT_APP_SOCIALS +
+          "/post/like/check/" +
+          session.user.uid +
+          "/" +
+          post.pid
+      )
+      .then((response) => {
+        likeIconStatusRef.current = response.data;
+        console.log(response.data);
+      })
+      .catch((error) => console.error(`Error" ${error}`));
+  };
+
+  const like = async () => {
+    try {
+      await axios
+        .get(process.env.REACT_APP_SOCIALS + "/post/like", {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+          params: { pid: post.pid },
+        })
+        .then((response) => {
+          console.log(response);
+          if (response.status === 200) {
+            // unliked
+            likeIconStatusRef.current = false;
+            console.log("unliked");
+          } else if (response.status === 201) {
+            // liked
+            likeIconStatusRef.current = true;
+            console.log("liked");
+          }
+        });
+      await axios
+        .get(process.env.REACT_APP_SOCIALS + "/post/" + post.pid)
+        .then((response) => {
+          likeCountRef.current = response.data.likes;
+          console.log("inside like count changer");
+        });
+    } catch (e) {
+      console.error(`Error" ${e}`);
+    }
+  };
 
   return (
     <Box sx={{ position: "relative", width: "572px", height: "703px" }}>
@@ -110,14 +154,10 @@ const Post = ({ post }) => {
           sx={{ position: "absolute", left: "5%", top: "5%" }}
           onClick={like}
         >
-          {liked ? (
-            <WorkspacePremiumIcon sx={{ color: "#4169E1" }} />
-          ) : (
-            <WorkspacePremiumIcon />
-          )}
+          {likeIconRef.current}
         </IconButton>
       </Box>
-      <Box>{likeCountRef.current}</Box>
+      <Box>{likeCountCompRef.current}</Box>
       <Box
         sx={{
           position: "absolute",

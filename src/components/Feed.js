@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useCallback, useEffect, useRef } from "react";
 import Post from "../components/Post";
 import Stack from "@mui/material/Stack";
 import { Box, CircularProgress, Grid } from "@mui/material";
@@ -7,25 +7,14 @@ import axios from "axios";
 
 function Feed() {
   const [posts, setPosts] = useState([]);
-  const [currentPost, setCurrentPost] = useState(0);
+  const [currentPost, setCurrentPost] = useState(-1);
   const postRef = useRef(null);
 
-  const next = () => {
-    if (currentPost < posts.length - 1) {
-      setCurrentPost(currentPost + 1);
-    }
-  };
-
-  const prev = () => {
-    if (currentPost > 0) {
-      setCurrentPost(currentPost - 1);
-    }
-  };
-
-  const getPosts = () => {
-    axios
+  const getPosts = async () => {
+    await axios
       .get(process.env.REACT_APP_SOCIALS + "/posts")
       .then((response) => setPosts(response.data))
+      .then(() => setCurrentPost(0))
       .catch((error) => console.error(`Error" ${error}`));
   };
 
@@ -35,9 +24,29 @@ function Feed() {
 
   useEffect(() => {
     if (posts.length > 0) {
-      postRef.current = <Post post={posts[currentPost]} />;
+      // console.log(posts);
+      // console.log(posts[0].screenname);
+      postRef.current = <Post post={posts[0]} />;
     }
-  }, [posts, currentPost]);
+  }, [posts]);
+
+  const nextPost = useCallback(() => {
+    if (currentPost + 1 < posts.length) {
+      // console.log(currentPost + 1);
+      // console.log(posts[currentPost + 1].screenname);
+      postRef.current = <Post post={posts[currentPost + 1]} />;
+      setCurrentPost((currentPost) => currentPost + 1);
+    }
+  }, [currentPost, postRef, posts]);
+
+  const prevPost = useCallback(() => {
+    if (currentPost > 0) {
+      // console.log(currentPost - 1);
+      // console.log(posts[currentPost - 1].screenname);
+      postRef.current = <Post post={posts[currentPost - 1]} />;
+      setCurrentPost((currentPost) => currentPost - 1);
+    }
+  }, [currentPost, postRef, posts]);
 
   return (
     <Grid
@@ -47,13 +56,13 @@ function Feed() {
       direction="column"
       mt={7}
     >
-      {postRef == null ? (
+      {!postRef.current ? (
         <CircularProgress />
       ) : (
         <Stack direction="row" justifyContent="space-between" spacing={30}>
-          <Arrow direction={"l"} onClick={prev} />
+          <Arrow direction={"l"} onClick={prevPost} />
           <Box>{postRef.current}</Box>
-          <Arrow direction={"r"} onClick={next} />
+          <Arrow direction={"r"} onClick={nextPost} />
         </Stack>
       )}
     </Grid>
