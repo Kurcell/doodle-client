@@ -1,14 +1,103 @@
-import { useState } from "react";
+import { useContext, useEffect, useRef, useCallback } from "react";
+import AuthContext from "../context/AuthProvider";
 import { Avatar, Typography, Box, IconButton } from "@mui/material";
-import FavoriteIcon from "@mui/icons-material/Favorite";
+import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 import calculateTime from "../common/common";
+import axios from "axios";
 
-const Post = ({ screenname, username, date }) => {
-  const [liked, setLiked] = useState(false);
+const Post = ({ post }) => {
+  const { session } = useContext(AuthContext);
+  const likeIconRef = useRef(<WorkspacePremiumIcon />);
+  const likeCountRef = useRef(
+    <Typography
+      sx={{
+        fontSize: "14px",
+        display: "flex",
+        justifyContent: "center",
+        position: "absolute",
+        left: "92.3%",
+        top: "92%",
+        height: "24px",
+        width: "44px",
+      }}
+    >
+      {post.likes}
+    </Typography>
+  );
 
-  const like = () => {
-    setLiked((prev) => !prev);
-  };
+  useEffect(() => {
+    checkLiked();
+  }, []);
+
+  const checkLiked = useCallback(() => {
+    axios
+      .get(
+        process.env.REACT_APP_SOCIALS +
+          "/post/like/check/" +
+          session.user.uid +
+          "/" +
+          post.pid
+      )
+      .then((response) => {
+        if (response.data) {
+          likeIconRef.current = (
+            <WorkspacePremiumIcon sx={{ color: "#4169E1" }} />
+          );
+        } else {
+          likeIconRef.current = <WorkspacePremiumIcon />;
+        }
+        console.log(response.data);
+      })
+      .catch((error) => console.error(`Error" ${error}`));
+  }, [session, post, likeIconRef]);
+
+  const like = useCallback(async () => {
+    try {
+      await axios
+        .get(process.env.REACT_APP_SOCIALS + "/post/like", {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+          params: { pid: post.pid },
+        })
+        .then((response) => {
+          console.log(response);
+          if (response.status === 200) {
+            // unliked
+            likeIconRef.current = <WorkspacePremiumIcon />;
+            console.log("unliked");
+          } else if (response.status === 201) {
+            // liked
+            likeIconRef.current = (
+              <WorkspacePremiumIcon sx={{ color: "#4169E1" }} />
+            );
+            console.log("liked");
+          }
+        });
+      await axios
+        .get(process.env.REACT_APP_SOCIALS + "/post/" + post.pid)
+        .then((response) => {
+          likeCountRef.current = (
+            <Typography
+              sx={{
+                fontSize: "14px",
+                display: "flex",
+                justifyContent: "center",
+                position: "absolute",
+                left: "92.3%",
+                top: "92%",
+                height: "24px",
+                width: "44px",
+              }}
+            >
+              {response.data.likes}
+            </Typography>
+          );
+          console.log("inside like count changer");
+        });
+    } catch (e) {
+      console.error(`Error" ${e}`);
+    }
+  }, [post, likeIconRef, likeCountRef]);
 
   return (
     <Box sx={{ position: "relative", width: "572px", height: "703px" }}>
@@ -57,13 +146,10 @@ const Post = ({ screenname, username, date }) => {
           sx={{ position: "absolute", left: "5%", top: "5%" }}
           onClick={like}
         >
-          {liked ? (
-            <FavoriteIcon sx={{ color: "#E60000" }} />
-          ) : (
-            <FavoriteIcon />
-          )}
+          {likeIconRef.current}
         </IconButton>
       </Box>
+      <Box>{likeCountRef.current}</Box>
       <Box
         sx={{
           position: "absolute",
@@ -93,7 +179,7 @@ const Post = ({ screenname, username, date }) => {
             width: "124px",
           }}
         >
-          {screenname}
+          {post.screenname}
         </Typography>
         <Typography
           sx={{
@@ -105,7 +191,7 @@ const Post = ({ screenname, username, date }) => {
             width: "124px",
           }}
         >
-          @{username}
+          @{post.username}
         </Typography>
         <Typography
           sx={{
@@ -120,7 +206,7 @@ const Post = ({ screenname, username, date }) => {
             width: "61px",
           }}
         >
-          {calculateTime(date)}
+          {calculateTime(post.createdat)}
         </Typography>
       </Box>
     </Box>
