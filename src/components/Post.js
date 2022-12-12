@@ -5,7 +5,7 @@ import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 import calculateTime from "../common/common";
 import axios from "axios";
 
-const Post = ({ post }) => {
+const Post = ({ post, children }) => {
   const { session } = useContext(AuthContext);
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(post.likes);
@@ -87,15 +87,10 @@ const Post = ({ post }) => {
             top: "6.1%",
             height: "500px",
             width: "500px",
+            background: "#FFFFFF",
           }}
         >
-          <img
-            width="100%"
-            src={
-              "https://static.vecteezy.com/system/resources/previews/005/338/359/non_2x/archimedean-spiral-curve-shape-doodle-icon-for-apps-and-websites-i-vector.jpg"
-            }
-            alt=""
-          />
+          {children}
         </Box>
       </Box>
       <Box
