@@ -44,7 +44,10 @@ function Feed() {
   const getPosts = async () => {
     let doodleIds = [];
     await axios
-      .get(process.env.REACT_APP_SOCIALS + "/posts")
+      .get(process.env.REACT_APP_SOCIALS + "/posts", {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      })
       .then((response) => {
         setPosts(response.data);
         extractDoodles(response.data, doodleIds);
@@ -52,7 +55,10 @@ function Feed() {
       .then(() => setCurrentPost(0))
       .catch((error) => console.error(`Error" ${error}`));
     await axios
-      .get(process.env.REACT_APP_DOODLES + "/doodles")
+      .get(process.env.REACT_APP_DOODLES + "/doodles", {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      })
       .then((response) => {
         setDoodles(filterDoodles(response.data, doodleIds));
       });
