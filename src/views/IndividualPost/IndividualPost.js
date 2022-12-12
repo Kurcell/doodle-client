@@ -17,7 +17,6 @@ const IndividualPost = () => {
     await axios
       .get(process.env.REACT_APP_SOCIALS + `/post/${pid}`)
       .then((response) => {
-        console.log(response.data);
         setPost(response.data);
         doodleId = response.data.doodle_id;
       })
@@ -26,7 +25,6 @@ const IndividualPost = () => {
       .get(process.env.REACT_APP_DOODLES + `/doodle/${doodleId}`)
       .then((response) => {
         setInstructions(parse(response.data.instructions));
-        console.log(parse(response.data.instructions));
       })
       .catch((error) => console.error(`Error" ${error}`));
   };
@@ -37,7 +35,6 @@ const IndividualPost = () => {
 
   useEffect(() => {
     if (post && instructions) {
-      console.log("ping");
       postRef.current = (
         <Post post={post}>
           <Doodle instructions={instructions} />
@@ -45,9 +42,6 @@ const IndividualPost = () => {
       );
     }
   }, [post, instructions]);
-
-  console.log(instructions);
-  console.log(post);
 
   return !postRef.current ? (
     <CircularProgress />
