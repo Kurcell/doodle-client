@@ -20,7 +20,7 @@ export const parseTesting = () => {
 };
 
 export const parse = (instructionsString) => {
-  if (instructionsString === "") return [];
+  if (instructionsString === "" || !instructionsString) return [];
   const instructions = instructionsString.split(";");
   return instructions.map(stringToObj);
 };
