@@ -14,7 +14,7 @@ import { useContext, useEffect, useState } from "react";
 import AuthContext from "../context/AuthProvider";
 import axios from "axios";
 import { parse } from "../util/drawing";
-// TODO: import { Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 const modalStyle = {
   position: "relative",
@@ -159,7 +159,7 @@ const PostModal = ({ instructions }) => {
       </Modal>
     </div>
   ) : posted ? (
-    <Typography>Posted post {postId}</Typography> // TODO: Replace to navigate to individual post view
+    <Navigate to={`/post/${postId}`} />
   ) : (
     <CircularProgress />
   );
