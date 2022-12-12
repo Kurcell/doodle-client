@@ -24,14 +24,12 @@ function Feed() {
 
   useEffect(() => {
     if (posts.length > 0) {
-      console.log(posts);
       postRef.current = <Post post={posts[0]} />;
     }
   }, [posts]);
 
   const nextPost = useCallback(() => {
     if (currentPost + 1 < posts.length) {
-      console.log("pid: " + posts[currentPost + 1].pid);
       postRef.current = <Post post={posts[currentPost + 1]} />;
       setCurrentPost((currentPost) => currentPost + 1);
     }
@@ -39,7 +37,6 @@ function Feed() {
 
   const prevPost = useCallback(() => {
     if (currentPost > 0) {
-      console.log("pid: " + posts[currentPost - 1].pid);
       postRef.current = <Post post={posts[currentPost - 1]} />;
       setCurrentPost((currentPost) => currentPost - 1);
     }

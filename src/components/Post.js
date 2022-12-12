@@ -9,7 +9,6 @@ const Post = ({ post }) => {
   const { session } = useContext(AuthContext);
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(post.likes);
-  // const likeIconRef = useRef(null);
 
   const checkLiked = async () => {
     await axios
@@ -22,7 +21,6 @@ const Post = ({ post }) => {
       )
       .then((response) => {
         setLiked((prev) => (prev === response.data ? prev : !prev));
-        console.log("checkLiked: " + response.data);
       })
       .catch((error) => console.error(`Error" ${error}`));
   };
@@ -32,7 +30,6 @@ const Post = ({ post }) => {
       .get(process.env.REACT_APP_SOCIALS + "/post/" + post.pid)
       .then((response) => {
         setLikeCount(response.data.likes);
-        console.log("checkLikeCount: " + response.data.likes);
       })
       .catch((error) => console.error(`Error" ${error}`));
   };
@@ -51,7 +48,6 @@ const Post = ({ post }) => {
           params: { pid: post.pid },
         })
         .then((response) => {
-          // console.log(response);
           if (!(response.status === 200 || response.status === 201)) {
             throw "Invalid Response";
           }
@@ -61,7 +57,6 @@ const Post = ({ post }) => {
         .get(process.env.REACT_APP_SOCIALS + "/post/" + post.pid)
         .then((response) => {
           setLikeCount(response.data.likes);
-          console.log("likes: " + response.data.likes);
         });
     } catch (e) {
       console.error(`Error" ${e}`);
@@ -72,7 +67,6 @@ const Post = ({ post }) => {
     likePost();
   }, []);
 
-  // console.log(liked);
   return (
     <Box sx={{ position: "relative", width: "572px", height: "703px" }}>
       <Box
