@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState, useRef } from "react";
+import { useContext, useEffect, useRef, useCallback } from "react";
 import AuthContext from "../context/AuthProvider";
 import { Avatar, Typography, Box, IconButton } from "@mui/material";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
@@ -7,12 +7,8 @@ import axios from "axios";
 
 const Post = ({ post }) => {
   const { session } = useContext(AuthContext);
-  const likeIconStatusRef = useRef(false);
-  const [liked, setLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(post.likes);
   const likeIconRef = useRef(<WorkspacePremiumIcon />);
-  const likeCountRef = useRef(post.likes);
-  const likeCountCompRef = useRef(
+  const likeCountRef = useRef(
     <Typography
       sx={{
         fontSize: "14px",
@@ -33,34 +29,7 @@ const Post = ({ post }) => {
     checkLiked();
   }, []);
 
-  useEffect(() => {
-    if (likeIconStatusRef.current) {
-      likeIconRef.current = <WorkspacePremiumIcon sx={{ color: "#4169E1" }} />;
-    } else {
-      likeIconRef.current = <WorkspacePremiumIcon />;
-    }
-  }, [likeIconStatusRef]);
-
-  useEffect(() => {
-    likeCountCompRef.current = (
-      <Typography
-        sx={{
-          fontSize: "14px",
-          display: "flex",
-          justifyContent: "center",
-          position: "absolute",
-          left: "92.3%",
-          top: "92%",
-          height: "24px",
-          width: "44px",
-        }}
-      >
-        {likeCountRef.current}
-      </Typography>
-    );
-  }, [likeCountRef]);
-
-  const checkLiked = () => {
+  const checkLiked = useCallback(() => {
     axios
       .get(
         process.env.REACT_APP_SOCIALS +
@@ -70,13 +39,19 @@ const Post = ({ post }) => {
           post.pid
       )
       .then((response) => {
-        likeIconStatusRef.current = response.data;
+        if (response.data) {
+          likeIconRef.current = (
+            <WorkspacePremiumIcon sx={{ color: "#4169E1" }} />
+          );
+        } else {
+          likeIconRef.current = <WorkspacePremiumIcon />;
+        }
         console.log(response.data);
       })
       .catch((error) => console.error(`Error" ${error}`));
-  };
+  }, [session, post, likeIconRef]);
 
-  const like = async () => {
+  const like = useCallback(async () => {
     try {
       await axios
         .get(process.env.REACT_APP_SOCIALS + "/post/like", {
@@ -88,24 +63,41 @@ const Post = ({ post }) => {
           console.log(response);
           if (response.status === 200) {
             // unliked
-            likeIconStatusRef.current = false;
+            likeIconRef.current = <WorkspacePremiumIcon />;
             console.log("unliked");
           } else if (response.status === 201) {
             // liked
-            likeIconStatusRef.current = true;
+            likeIconRef.current = (
+              <WorkspacePremiumIcon sx={{ color: "#4169E1" }} />
+            );
             console.log("liked");
           }
         });
       await axios
         .get(process.env.REACT_APP_SOCIALS + "/post/" + post.pid)
         .then((response) => {
-          likeCountRef.current = response.data.likes;
+          likeCountRef.current = (
+            <Typography
+              sx={{
+                fontSize: "14px",
+                display: "flex",
+                justifyContent: "center",
+                position: "absolute",
+                left: "92.3%",
+                top: "92%",
+                height: "24px",
+                width: "44px",
+              }}
+            >
+              {response.data.likes}
+            </Typography>
+          );
           console.log("inside like count changer");
         });
     } catch (e) {
       console.error(`Error" ${e}`);
     }
-  };
+  }, [post, likeIconRef, likeCountRef]);
 
   return (
     <Box sx={{ position: "relative", width: "572px", height: "703px" }}>
@@ -157,7 +149,7 @@ const Post = ({ post }) => {
           {likeIconRef.current}
         </IconButton>
       </Box>
-      <Box>{likeCountCompRef.current}</Box>
+      <Box>{likeCountRef.current}</Box>
       <Box
         sx={{
           position: "absolute",
