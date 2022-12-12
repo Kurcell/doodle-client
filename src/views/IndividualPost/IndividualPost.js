@@ -15,14 +15,20 @@ const IndividualPost = () => {
   const getPost = async () => {
     let doodleId;
     await axios
-      .get(process.env.REACT_APP_SOCIALS + `/post/${pid}`)
+      .get(process.env.REACT_APP_SOCIALS + `/post/${pid}`, {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      })
       .then((response) => {
         setPost(response.data);
         doodleId = response.data.doodle_id;
       })
       .catch((error) => console.error(`Error" ${error}`));
     await axios
-      .get(process.env.REACT_APP_DOODLES + `/doodle/${doodleId}`)
+      .get(process.env.REACT_APP_DOODLES + `/doodle/${doodleId}`, {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      })
       .then((response) => {
         setInstructions(parse(response.data.instructions));
       })
