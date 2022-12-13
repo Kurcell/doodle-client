@@ -1,15 +1,28 @@
 import React, { useContext } from "react";
-import { Typography } from "@mui/material";
+import { Grid, Stack } from "@mui/material";
 import AuthContext from "../../context/AuthProvider";
+import ArtistCard from "../../components/ArtistCard";
+import ArtistGallery from "../../components/ArtistGallery";
 
 const Profile = () => {
   const { session } = useContext(AuthContext);
+
   return (
-    <React.Fragment>
-      <Typography>
-        I am {session.user.screenname} @{session.user.username}
-      </Typography>
-    </React.Fragment>
+    <Grid
+      container
+      justify="center"
+      alignItems="center"
+      direction="column"
+      mt={7}
+    >
+      <Stack direction="row" justifyContent="space-between" spacing={10}>
+        <ArtistCard
+          screenname={session.user.screenname}
+          username={session.user.username}
+        />
+        <ArtistGallery />
+      </Stack>
+    </Grid>
   );
 };
 
