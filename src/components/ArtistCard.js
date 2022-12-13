@@ -90,8 +90,7 @@ const ArtistCard = ({ screenname, username }) => {
           <Box fontWeight="bold" display="inline">
             @{username}
           </Box>{" "}
-          in inner circles. They have various works of art which are shown on
-          this page.
+          in inner circles. Their most liked work of art is displayed to the right.
         </Typography>
       </Box>
     </Box>
