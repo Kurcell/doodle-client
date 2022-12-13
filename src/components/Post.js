@@ -139,9 +139,7 @@ const Post = ({ post, children }) => {
       >
         <Avatar
           sx={{ position: "absolute", left: "7.8%", top: "27.6%" }}
-          src={
-            "https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg"
-          }
+          src={ post.profile }
         />
         <Typography
           sx={{

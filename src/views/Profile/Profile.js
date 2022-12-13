@@ -17,6 +17,7 @@ const Profile = () => {
     >
       <Stack direction="row" justifyContent="space-between" spacing={10}>
         <ArtistCard
+          profile={session.user.profile}
           screenname={session.user.screenname}
           username={session.user.username}
         />

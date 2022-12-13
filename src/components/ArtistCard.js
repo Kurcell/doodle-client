@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 
-const ArtistCard = ({ screenname, username }) => {
+const ArtistCard = ({ profile, screenname, username }) => {
   return (
     <Box
       sx={{
@@ -37,28 +37,7 @@ const ArtistCard = ({ screenname, username }) => {
           borderRadius: "10px",
         }}
       >
-        <Box
-          sx={{
-            position: "absolute",
-            width: "180px",
-            height: "180px",
-            left: "32%",
-            top: "30%",
-            background: "#969595",
-            borderRadius: "90px",
-          }}
-        />
-        <Box
-          sx={{
-            position: "absolute",
-            width: "340px",
-            height: "340px",
-            left: "16%",
-            top: "70%",
-            background: "#969595",
-            borderRadius: "170px",
-          }}
-        />
+        <img src={profile} style={{borderRadius: 10}} width={'100%'} height={'100%'} />
       </Box>
       <Box
         sx={{

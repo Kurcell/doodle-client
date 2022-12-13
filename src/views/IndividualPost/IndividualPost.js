@@ -20,8 +20,8 @@ const IndividualPost = () => {
         withCredentials: true,
       })
       .then((response) => {
-        setPost(response.data);
-        doodleId = response.data.doodle_id;
+        setPost(response.data[0]);
+        doodleId = response.data[0].doodle_id;
       })
       .catch((error) => console.error(`Error" ${error}`));
     await axios
