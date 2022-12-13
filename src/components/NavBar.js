@@ -28,10 +28,14 @@ const Header = () => {
 
   const logout = async () => {
     try {
-      await axios.get(process.env.REACT_APP_SOCIALS + "/logout", {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-      });
+      await axios.post(
+        process.env.REACT_APP_SOCIALS + "/logout",
+        {},
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
       window.location.reload(false);
     } catch (e) {
       console.log(e);
