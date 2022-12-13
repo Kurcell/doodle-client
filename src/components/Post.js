@@ -1,4 +1,4 @@
-import { useContext, useEffect, useCallback, useState } from "react";
+import {useContext, useEffect, useCallback, useState } from "react";
 import AuthContext from "../context/AuthProvider";
 import { Avatar, Typography, Box, IconButton } from "@mui/material";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
@@ -20,16 +20,20 @@ const Post = ({ post, children }) => {
           post.pid
       )
       .then((response) => {
-        setLiked((prev) => (prev === response.data ? prev : !prev));
+        const likedData = response.data === "True";
+        setLiked((prev) => prev === likedData ? prev : likedData);
       })
       .catch((error) => console.error(`Error" ${error}`));
   };
 
   const checkLikeCount = async () => {
     await axios
-      .get(process.env.REACT_APP_SOCIALS + "/post/" + post.pid)
+      .get(process.env.REACT_APP_SOCIALS + "/post/" + post.pid, {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      })
       .then((response) => {
-        setLikeCount(response.data.likes);
+        setLikeCount(response.data[0].likes);
       })
       .catch((error) => console.error(`Error" ${error}`));
   };
@@ -41,6 +45,7 @@ const Post = ({ post, children }) => {
 
   const likePost = async () => {
     try {
+      let remoteLike = false;
       await axios
         .get(process.env.REACT_APP_SOCIALS + "/post/like", {
           headers: { "Content-Type": "application/json" },
@@ -48,15 +53,19 @@ const Post = ({ post, children }) => {
           params: { pid: post.pid },
         })
         .then((response) => {
+          remoteLike = response.status === 201;
           if (!(response.status === 200 || response.status === 201)) {
             throw "Invalid Response";
           }
-          setLiked((prev) => !prev);
+          setLiked((prevState) => prevState === remoteLike ? prevState : remoteLike)
         });
       await axios
-        .get(process.env.REACT_APP_SOCIALS + "/post/" + post.pid)
+        .get(process.env.REACT_APP_SOCIALS + "/post/" + post.pid, {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        })
         .then((response) => {
-          setLikeCount(response.data.likes);
+          setLikeCount(response.data[0].likes);
         });
     } catch (e) {
       console.error(`Error" ${e}`);
@@ -105,12 +114,18 @@ const Post = ({ post, children }) => {
           boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
         }}
       >
-        <IconButton
-          sx={{ position: "absolute", left: "5%", top: "5%" }}
+        {liked ? <IconButton
+          color="secondary"
+          sx={{position: "absolute", left: "5%", top: "5%"}}
           onClick={like}
         >
-          <WorkspacePremiumIcon />
-        </IconButton>
+          <WorkspacePremiumIcon/>
+        </IconButton> : <IconButton
+          sx={{position: "absolute", left: "5%", top: "5%"}}
+          onClick={like}
+        >
+          <WorkspacePremiumIcon/>
+        </IconButton>}
       </Box>
       <Typography
         sx={{
