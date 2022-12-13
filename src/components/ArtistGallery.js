@@ -125,12 +125,7 @@ function Feed() {
             alignItems="center"
             direction="column"
             mt={7}
-          >
-            <Stack direction="row" spacing={25}>
-              <Arrow direction={"l"} onClick={prevPost} />
-              <Arrow direction={"r"} onClick={nextPost} />
-            </Stack>
-          </Grid>
+          ></Grid>
         </Stack>
       )}
     </Box>
