@@ -109,11 +109,7 @@ const Post = ({ post, children }) => {
           sx={{ position: "absolute", left: "5%", top: "5%" }}
           onClick={like}
         >
-          {liked ? (
-            <WorkspacePremiumIcon sx={{ color: "#4169E1" }} />
-          ) : (
-            <WorkspacePremiumIcon />
-          )}
+          <WorkspacePremiumIcon />
         </IconButton>
       </Box>
       <Typography
